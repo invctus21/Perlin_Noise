@@ -79,34 +79,3 @@ def perlin_octaves(x, y, octaves=5, persistence=0.5, lacunarity=2):
         frequency *= lacunarity
 
     return value
-
-# Generate Terrain
-
-size = 100
-scale = 30.0
-
-x = np.linspace(0, size/scale, size)
-y = np.linspace(0, size/scale, size)
-x, y = np.meshgrid(x, y)
-
-z = np.zeros((size, size))
-
-for i in range(size):
-    for j in range(size):
-        z[i, j] = perlin_octaves(x[i, j], y[i, j])
-
-# normalize
-eps = 1e-9
-z = (z - z.min()) / (z.max() - z.min() + eps)
-
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
-
-ax.plot_surface(x, y, z, cmap='terrain')
-
-ax.set_title("Perlin Noise Terrain")
-ax.set_xlabel("X")
-ax.set_ylabel("Y")
-ax.set_zlabel("Height")
-
-plt.show()
